@@ -1,4 +1,4 @@
-const API = 'http://localhost:8081/api/v1/';
+const API = 'http://localhost:8081/api/v1';
 const model = 'auth';
 
 const getUser = async (email) => {
@@ -10,20 +10,21 @@ const getUser = async (email) => {
 }
 
 
-const createCategory = async (category) => {
-    const resp = await fetch(`${API}/${model}`, {
+const login = async (credentials) => {
+    const resp = await fetch(`${API}/${model}/authenticate`, {
         method: 'POST',
         headers:{
             'Content-type': 'application/json'
         },
-        body: JSON.stringify(category)
+        body: JSON.stringify(credentials)
     });
     return await resp.json();
 }
 
 
 export {
-    listCategory,
-    createCategory
+    getUser,
+    login
+    
     
 }

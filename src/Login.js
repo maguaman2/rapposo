@@ -1,10 +1,14 @@
 import React from "react"
 import { Button, Checkbox, Form, Input } from 'antd';
+import { login } from "./services/SecurityService";
 
 function Login(){
   const onFinish = (values) => {
     
     console.log('Success:', values);
+    login ({email: values.username, password: values.password}).then(resp =>
+      console.log(resp.token)
+      )
   };
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
