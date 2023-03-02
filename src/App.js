@@ -1,6 +1,6 @@
 import { FileOutlined, PieChartOutlined, UserOutlined, TeamOutlined, DesktopOutlined } from '@ant-design/icons';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
-import React,{ useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import Customers from './Customers';
 import Dashboard from './Dashboard';
@@ -12,11 +12,11 @@ import Login from './Login';
 const { Header, Content, Footer, Sider } = Layout;
 
 function getItem(label, key, icon, children) {
-  return {    
+  return {
     key,
     icon,
     children,
-    label, 
+    label,
   };
 }
 const items = [
@@ -37,72 +37,13 @@ const App = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   return (
-    <BrowserRouter>
-    <Layout
-      style={{
-        minHeight: '100vh',
-      }}
-    >
-      <Sider collapsible collapsed={collapsed} onCollapse={(value) => setCollapsed(value)}>
-        <div
-          style={{
-            height: 32,
-            margin: 16,
-            background: 'rgba(255, 255, 255, 0.2)',
-          }}
-        />
-        <Menu
-            theme="dark" 
-            defaultSelectedKeys={['1']} 
-            mode="inline" 
-            items={items} />
-      </Sider>
-      <Layout className="site-layout">
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-          }}
-        />
-        <Content
-          style={{
-            margin: '0 16px',
-          }}
-        >
-          <Breadcrumb
-            style={{
-              margin: '16px 0',
-            }}
-          >
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
-          </Breadcrumb>
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: colorBgContainer,
-            }}
-          >
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/customers" element={<Customers />} />
-              <Route path="/contracts" element={<Contracts />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/providers" element={<Providers />} />
-              <Route path="/Login" element={<Login />} />
+    <BrowserRouter>    
+    <Routes>
+                <Route path="/" element={<Dashboard />} />
+                <Route path="/contracts" element={<Contracts />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/providers" element={<Providers />} />
             </Routes>
-          </div>
-        </Content>
-        <Footer
-          style={{
-            textAlign: 'center',
-          }}
-        >
-          Ant Design ©2023 Created by Ant UED
-        </Footer>
-      </Layout>
-    </Layout>
     </BrowserRouter>
   );
 };

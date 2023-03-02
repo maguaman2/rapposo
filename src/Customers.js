@@ -1,9 +1,14 @@
 import React from "react"
+import { AppContext } from "./Context/AppContext";
 
 function Customers(){
+  const { role } = React.useContext(AppContext);
 
   return (
-  <p>Lista de clientes</p>
+    <>
+
+  <p>Lista de clientes {role}</p>
+    </>
   );
 }
 
