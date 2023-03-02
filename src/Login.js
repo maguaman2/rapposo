@@ -3,14 +3,19 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import { login } from "./services/SecurityService";
 import jwt from 'jwt-decode';
 import { AppContext } from "./Context/AppContext";
+import { saveToken } from "./auth/Headers";
+
 
 function Login() {
   const {  setRole } = React.useContext(AppContext);
 
   const onFinish = (values) => {
     login({ email: values.username, password: values.password })
-      .then(resp =>
-        setRole(jwt(resp.token).roles)
+      .then(resp =>{
+        
+        setRole(jwt(resp.token).roles);
+        saveToken(resp.token);
+      }
       )
   };
   const onFinishFailed = (errorInfo) => {
@@ -18,6 +23,7 @@ function Login() {
   };
 
   return (
+    <div style={{display:'grid',alignContent:'center'}}>
     <Form
       name="basic"
       labelCol={{
@@ -84,6 +90,8 @@ function Login() {
         </Button>
       </Form.Item>
     </Form>
+    
+</div>
   );
 }
 
