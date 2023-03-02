@@ -39,11 +39,11 @@ const App = () => {
   return (
     <BrowserRouter>    
     <Routes>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/contracts" element={<Contracts />} />
-                <Route path="/products" element={<Products />} />
-                <Route path="/providers" element={<Providers />} />
-            </Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/contracts" element={<Contracts />} />
+            <Route path="/products" element={<Products />} />
+          <Route path="/providers" element={<Providers />} />
+      </Routes>
     </BrowserRouter>
   );
 };
