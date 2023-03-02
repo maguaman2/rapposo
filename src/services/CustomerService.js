@@ -10,9 +10,19 @@ const listCustomer = async (email) => {
     return await response.json();    
 }
 
+const createCustomer = async (customer) => {
+
+    const resp = await fetch(`${API}/${model}`, {
+        method: 'POST',
+        body: JSON.stringify(customer),
+        headers: getHeadersAndToken()
+    });
+    return await resp.json();
+}
 
 export {
    
-    listCustomer
+    listCustomer,
+    createCustomer
     
 }

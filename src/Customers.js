@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { AppContext } from "./Context/AppContext";
 import getHeadersAndToken from './auth/Headers'
-import { listCustomer } from './services/CustomerService'
-
+import { listCustomer, createCustomer } from './services/CustomerService'
+import { Space, Table, Tag } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select, Space } from 'antd';
+import { Button, Col, DatePicker, Drawer, Form, Input, Row, Select } from 'antd';
 const { Option } = Select;
 
 function Customers(){
   const { role } = React.useContext(AppContext);
   const [open, setOpen] = useState(false);
+  const [customers, setCustomers] = useState([]);
+  const [customer, setCustomer] = useState({});
+
   const showDrawer = () => {
     setOpen(true);
   };
@@ -17,18 +20,66 @@ function Customers(){
     setOpen(false);
   };
 
+  const onSubmit = () => {
+    console.log(customer)
+    //createCustomer(values).then(response => console.log(response))
+  };
+
+  const onChange = (event) => {
+    console.log(event.target.name)
+    setCustomer({
+      ...customer,
+      [event.target.id]: event.target.value
+    })
+  };
   useEffect(() => {
     listCustomer().then(data => {
-      console.log(data);
-   
+      setCustomers(data);   
     }
     );
   }, []);
 
+
+
+  const columns = [
+    {
+      title: 'Cedula',
+      dataIndex: 'nui',
+      key: 'nui',
+      render: (text) => <a>{text}</a>,
+    },
+    {
+      title: 'Nombres',
+      dataIndex: 'firstname',
+      key: 'firstname',
+    },
+    {
+      title: 'Apellido',
+      dataIndex: 'lastname',
+      key: 'lastname',
+    },
+    {
+      title: 'Correo',
+      dataIndex: 'email',
+      key: 'email',
+    },
+
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_, record) => (
+        <Space size="middle">
+          <a>Edit {record.nui}</a>
+          <a>Delete</a>
+        </Space>
+      ),
+    },
+  ];
+
   return (
 <>
       <Button type="primary" onClick={showDrawer} icon={<PlusOutlined />}>
-        New account
+        Agregar
       </Button>
       <Drawer
         title="Create a new account"
@@ -40,9 +91,9 @@ function Customers(){
         }}
         extra={
           <Space>
-            <Button onClick={onClose}>Cancel</Button>
-            <Button onClick={onClose} type="primary">
-              Submit
+            <Button onClick={onClose}>Cancelar</Button>
+            <Button onClick={onSubmit} type="primary">
+              Guardar
             </Button>
           </Space>
         }
@@ -51,8 +102,10 @@ function Customers(){
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                name="name"
-                label="Name"
+                name={[customer.firstaname]}
+                label="Nombre"
+                value={customer.firstaname}
+                onChange={onChange}
                 rules={[
                   {
                     required: true,
@@ -63,120 +116,71 @@ function Customers(){
                 <Input placeholder="Please enter user name" />
               </Form.Item>
             </Col>
+
             <Col span={12}>
               <Form.Item
-                name="url"
-                label="Url"
+                name="lastname"
+                label="lastname"
+                value={customer.firstaname}
+                onChange={onChange}
                 rules={[
                   {
                     required: true,
-                    message: 'Please enter url',
+                    message: 'Please enter user name',
                   },
                 ]}
               >
-                <Input
-                  style={{
-                    width: '100%',
-                  }}
-                  addonBefore="http://"
-                  addonAfter=".com"
-                  placeholder="Please enter url"
-                />
+                <Input placeholder="Please enter user name" />
               </Form.Item>
             </Col>
+
           </Row>
+
           <Row gutter={16}>
             <Col span={12}>
               <Form.Item
-                name="owner"
-                label="Owner"
+                
                 rules={[
                   {
                     required: true,
-                    message: 'Please select an owner',
+                    message: 'Please enter user name',
                   },
                 ]}
               >
-                <Select placeholder="Please select an owner">
-                  <Option value="xiao">Xiaoxiao Fu</Option>
-                  <Option value="mao">Maomao Zhou</Option>
-                </Select>
+                <Input 
+                name="nui"
+                label="Cedula"
+                value={customer.nui}
+                onChange={onChange}
+                placeholder="Please enter user name" />
               </Form.Item>
             </Col>
+
             <Col span={12}>
               <Form.Item
-                name="type"
-                label="Type"
+                name="email"
+                label="Correo"
+                value={customer.email}
+                onChange={onChange}
                 rules={[
                   {
                     required: true,
-                    message: 'Please choose the type',
+                    message: 'Please enter user name',
                   },
                 ]}
               >
-                <Select placeholder="Please choose the type">
-                  <Option value="private">Private</Option>
-                  <Option value="public">Public</Option>
-                </Select>
+                <Input placeholder="Please enter user name" />
               </Form.Item>
             </Col>
+
           </Row>
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="approver"
-                label="Approver"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please choose the approver',
-                  },
-                ]}
-              >
-                <Select placeholder="Please choose the approver">
-                  <Option value="jack">Jack Ma</Option>
-                  <Option value="tom">Tom Liu</Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name="dateTime"
-                label="DateTime"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please choose the dateTime',
-                  },
-                ]}
-              >
-                <DatePicker.RangePicker
-                  style={{
-                    width: '100%',
-                  }}
-                  getPopupContainer={(trigger) => trigger.parentElement}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={16}>
-            <Col span={24}>
-              <Form.Item
-                name="description"
-                label="Description"
-                rules={[
-                  {
-                    required: true,
-                    message: 'please enter url description',
-                  },
-                ]}
-              >
-                <Input.TextArea rows={4} placeholder="please enter url description" />
-              </Form.Item>
-            </Col>
-          </Row>
+
         </Form>
       </Drawer>
+
+
+
+      <Table columns={columns} dataSource={customers} />
     </>
   );
 }
