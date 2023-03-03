@@ -1,9 +1,11 @@
 import React from "react"
+import { AppContext } from "./Context/AppContext";
 
 function Dashboard(){
+  const { role } = React.useContext(AppContext);
 
   return (
-  <p>Dashboard</p>
+  <p>Dashboard {role}</p>
   );
 }
 
