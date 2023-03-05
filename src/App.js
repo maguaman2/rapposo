@@ -8,10 +8,15 @@ import Products from './Products';
 import Contracts from './Contracts';
 import Login from './Login';
 import SideBar from './sideBarMenu/SideBar';
+import { getRoleFromToken } from "./auth/Headers";
+import jwt from 'jwt-decode';
 
-const App = () => {
-  const { role } = React.useContext(AppContext);
-
+const App = () => {  
+  const { role, setRole } = React.useContext(AppContext);
+  
+  if ( !!getRoleFromToken ) 
+    setRole(jwt(getRoleFromToken).roles);
+  
   return (
     <BrowserRouter>
       {role === '' ?        

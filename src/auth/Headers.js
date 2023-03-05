@@ -8,6 +8,12 @@ const getHeadersAndToken = ()=>{
     }
 }
 
+const getRoleFromToken = ()=>{
+    if (!!cokieActual)
+        return cokieActual.replace('token=','')
+
+}
+
 const saveToken = (jwt)=>{
 
     document.cookie = `token=${jwt};max-age=${60 * 60 * 3}; path=/; samesite=strict`
@@ -18,5 +24,6 @@ const saveToken = (jwt)=>{
 
 
  export { getHeadersAndToken,
-    saveToken
+    saveToken,
+    getRoleFromToken
 }

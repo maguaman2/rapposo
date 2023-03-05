@@ -1,7 +1,7 @@
 import React from "react"
 import { Button, Checkbox, Form, Input } from 'antd';
 import { login } from "./services/SecurityService";
-import jwt from 'jwt-decode';
+
 import { AppContext } from "./Context/AppContext";
 import { saveToken } from "./auth/Headers";
 
@@ -11,10 +11,8 @@ function Login() {
 
   const onFinish = (values) => {
     login({ email: values.username, password: values.password })
-      .then(resp =>{
-        
-        setRole(jwt(resp.token).roles);
-        saveToken(resp.token);
+      .then(resp =>{        
+        saveToken(resp.token);        
       }
       )
   };

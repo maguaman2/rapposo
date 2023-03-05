@@ -6,6 +6,7 @@ const { Header, Content, Footer, Sider } = Layout;
 
 const SideBar = ({ children }) => {
   const { role } = React.useContext(AppContext);
+
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },

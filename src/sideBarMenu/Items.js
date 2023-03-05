@@ -35,6 +35,7 @@ const permissions = [
 
 ]
 const itemsByRole = (role) => {
+  
   return items.filter(item => permissions.find(per => per.role === role).items.includes(item.label))
 }
 
